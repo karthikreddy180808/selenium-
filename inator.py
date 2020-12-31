@@ -8,7 +8,7 @@ hour = int(datetime.datetime.now().strftime("%H"))
 
 class Automate:
     def __init__(self):
-        self.driver = selenium.webdriver.Chrome("C:\\Users\\saish\\Downloads\\chromedriver_win32\\chromedriver.exe")
+        self.driver = selenium.webdriver.Chrome("chromedriver.exe")
         self.driver.get("http://ngitonline.com")
         self.classes = {}
 
