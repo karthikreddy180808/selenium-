@@ -14,10 +14,13 @@ class Automate:
 
     def login(self):
         try:
+            print("Getting credentials from saved file...")
             with open("C:\\Users\\Public\\credentials.txt", "r") as f:
                 creds = f.readline()
             f.close()
         except FileNotFoundError:
+            print("\n Its your first time using this console app, please enter your credentials below (needed only "
+                  "once) they will be stored in Public user folder")
             with open("C:\\Users\\Public\\credentials.txt", "w") as f:
                 UserName = input("Username: ")
                 PassWord = input("Password: ")
