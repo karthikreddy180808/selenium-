@@ -1,8 +1,9 @@
 from selenium import webdriver
 import selenium
 import datetime
+from selenium.common.exceptions import NoSuchElementException
 
-day = datetime.datetime.now().strftime("%d")
+hour = int(datetime.datetime.now().strftime("%H"))
 
 
 class Automate:
@@ -13,9 +14,9 @@ class Automate:
 
     def login(self):
         username = self.driver.find_element_by_id("username")
-        username.send_keys(19733020)  # your id
+        username.send_keys("")  # your id
         password = self.driver.find_element_by_id("password")
-        password.send_keys("6pZQJehB")  # your password
+        password.send_keys("")  # your password
         login_button = self.driver.find_element_by_id("loginbtn")
         login_button.click()
 
@@ -24,41 +25,41 @@ class Automate:
             try:
                 path = "/html/body/div[2]/div/section/div/div/div/div[{}]/".format(i)
                 # print(path)
-                self.classes[self.driver.find_element_by_xpath(
-                    path + "div[2]/header/h2".format(
-                        i)).text] = self.driver.find_element_by_xpath(
-                    path + "div[3]/form/a")
-            except:  # TODO: find reasonable exception pass i.e A type for exception
+                # /html/body/div[2]/div/section/div/div/div/div[1]/div[3]/a/span
+                print(self.driver.find_element_by_xpath(path + "div[3]/a/span").text)
+                if self.driver.find_element_by_xpath(path + "div[3]/a/span").text == "JOIN":
+                    self.classes[self.driver.find_element_by_xpath(
+                        path + "div[2]/header/h2").text] = \
+                        [self.driver.find_element_by_xpath(path + "div[3]/a"),
+                         int((self.driver.find_element_by_xpath(
+                             "/html/body/div[2]/div/section/div/div/div/div[1]/div[2]/header/span/div/span[1]").text[-7]
+                             ).strip())]
+
+            except NoSuchElementException:
                 pass
 
-    def display(self):
+    def display(self):  # Note: TO BE DEPRECATED
         print(self.classes.keys())
 
-    def join_class(self, class_name):
+    def join_class(self, class_name):  # Note: TO BE DEPRECATED
         for i in self.classes.keys():
             if class_name in i:
                 self.classes[i].click()
 
-    def join_all_possible_classes(self):  # FIXME: TO BE DEPRECATED
-        for i in self.classes.keys():     # Note: Include a standard process rather than click all software.
+    def join_all_possible_classes(self):  # Note: TO BE DEPRECATED
+        for i in self.classes.keys():  # Note: Include a standard process rather than click all software.
             self.classes[i].click()
 
+    def join_most_recent_class(self):
+        if len(self.classes.keys()) > 1:
+            priority_list = sorted(self.classes.items(), key=lambda x: hour - x[1][1])
+            priority_list[0][1][0].click()
+            return
+        list(self.classes.items())[0][1][0].click()
 
-class Process:
-    def __init__(self) -> None:
-        self.a1 = Automate()
-        self.a1.login()
-        self.l_classes = 0
-
-    def search(self):
-        self.a1.find_classes()
-        l1 = list(self.a1.classes)
-        l1 = list(enumerate(l))
-        self.l_classes = l1
-
-    def join_class(self, class_name):
-        self.a1.join_class(class_name=class_name)
-
-    def join_all_classes(self):
-        self.a1.join_all_possible_classes()
-# TODO: A segregation system based on time and date.
+# Below lines: TO BE DEPRECATED
+# a1 = Automate()
+# a1.login()
+# a1.find_classes()
+# a1.join_most_recent_class()
+# a1.display()
