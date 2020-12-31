@@ -13,10 +13,23 @@ class Automate:
         self.classes = {}
 
     def login(self):
+        try:
+            with open("C:\\Users\\Public\\credentials.txt", "r") as f:
+                creds = f.readline()
+            f.close()
+        except FileNotFoundError:
+            with open("C:\\Users\\Public\\credentials.txt", "w") as f:
+                UserName = input("Username: ")
+                PassWord = input("Password: ")
+                f.write(UserName)
+                f.write(PassWord)
+            f.close()
+        UserName = creds[:8]
+        PassWord = creds[8:]
         username = self.driver.find_element_by_id("username")
-        username.send_keys("")  # your id
+        username.send_keys(UserName)  # your id
         password = self.driver.find_element_by_id("password")
-        password.send_keys("")  # your password
+        password.send_keys(PassWord)  # your password
         login_button = self.driver.find_element_by_id("loginbtn")
         login_button.click()
 
@@ -24,9 +37,6 @@ class Automate:
         for i in range(1, 30):
             try:
                 path = "/html/body/div[2]/div/section/div/div/div/div[{}]/".format(i)
-                # print(path)
-                # /html/body/div[2]/div/section/div/div/div/div[1]/div[3]/a/span
-                print(self.driver.find_element_by_xpath(path + "div[3]/a/span").text)
                 if self.driver.find_element_by_xpath(path + "div[3]/a/span").text == "JOIN":
                     self.classes[self.driver.find_element_by_xpath(
                         path + "div[2]/header/h2").text] = \
@@ -38,28 +48,11 @@ class Automate:
             except NoSuchElementException:
                 pass
 
-    def display(self):  # Note: TO BE DEPRECATED
-        print(self.classes.keys())
-
-    def join_class(self, class_name):  # Note: TO BE DEPRECATED
-        for i in self.classes.keys():
-            if class_name in i:
-                self.classes[i].click()
-
-    def join_all_possible_classes(self):  # Note: TO BE DEPRECATED
-        for i in self.classes.keys():  # Note: Include a standard process rather than click all software.
-            self.classes[i].click()
-
     def join_most_recent_class(self):
         if len(self.classes.keys()) > 1:
             priority_list = sorted(self.classes.items(), key=lambda x: hour - x[1][1])
             priority_list[0][1][0].click()
             return
-        list(self.classes.items())[0][1][0].click()
-
-# Below lines: TO BE DEPRECATED
-# a1 = Automate()
-# a1.login()
-# a1.find_classes()
-# a1.join_most_recent_class()
-# a1.display()
+        if len(self.classes.keys()) == 1:
+            list(self.classes.items())[0][1][0].click()
+        print("No classes found, please check manually otherwise just sleep ZZZZZZZZZZZZZZZZZZ")
