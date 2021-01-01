@@ -17,6 +17,8 @@ class Automate:
             print("Getting credentials from saved file...")
             with open("C:\\Users\\Public\\credentials.txt", "r") as f:
                 creds = f.readline()
+                UserName = creds[:8]
+                PassWord = creds[8:]
             f.close()
         except FileNotFoundError:
             print("\n Its your first time using this console app, please enter your credentials below (needed only "
@@ -27,8 +29,7 @@ class Automate:
                 f.write(UserName)
                 f.write(PassWord)
             f.close()
-        UserName = creds[:8]
-        PassWord = creds[8:]
+
         username = self.driver.find_element_by_id("username")
         username.send_keys(UserName)  # your id
         password = self.driver.find_element_by_id("password")
