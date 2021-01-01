@@ -6,7 +6,9 @@ A project for automating class joining process for students of Ngit.
 
 #### First time
 
-- you need to download the chromedriver and move it into the project directory where the 2 files are present!
+- You need to download the [chromedriver](https://chromedriver.chromium.org/) and move it into the project directory where the 2 files are present!(for source code)
+
+  - For using console app, the **chromdriver** should be in the same directory as the console app.
 
 - If its the first time you use ClassJoinInator, you need to enter your credentials- (you need to do this only once, the credentials are stored), EXERCISE CAUTION WHEN ENTERING CREDENTIALS. 
 
