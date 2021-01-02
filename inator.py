@@ -59,4 +59,5 @@ class Automate:
             return
         if len(self.classes.keys()) == 1:
             list(self.classes.items())[0][1][0].click()
+            return
         print("No classes found, please check manually otherwise just sleep ZZZZZZZZZZZZZZZZZZ")
