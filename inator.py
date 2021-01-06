@@ -44,12 +44,12 @@ class Automate:
         for i in range(1, 30):
             try:
                 path = "/html/body/div[2]/div/section/div/div/div/div[{}]/".format(i)
-                if self.driver.find_element_by_xpath(path + "div[3]/a/span").text == "JOIN":
+                if self.driver.find_element_by_xpath(path + "div[3]/form/a/span").text == "JOIN":
                     self.classes[self.driver.find_element_by_xpath(
                         path + "div[2]/header/h2").text] = \
                         [self.driver.find_element_by_xpath(path + "div[3]/a"),
                          self.driver.find_element_by_xpath(
-                             "/html/body/div[2]/div/section/div/div/div/div[1]/div[2]/header/span/div/span[1]"
+                             path + "div[2]/header/span/div/span[1]"
                              "").text[-8:-3].strip().split(":")]
 
             except NoSuchElementException:
