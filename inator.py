@@ -47,7 +47,7 @@ class Automate:
                 if self.driver.find_element_by_xpath(path + "div[3]/form/a/span").text == "JOIN":
                     self.classes[self.driver.find_element_by_xpath(
                         path + "div[2]/header/h2").text] = \
-                        [self.driver.find_element_by_xpath(path + "div[3]/a"),
+                        [self.driver.find_element_by_xpath(path + "div[3]/form/a"),
                          self.driver.find_element_by_xpath(
                              path + "div[2]/header/span/div/span[1]"
                              "").text[-8:-3].strip().split(":")]
