@@ -41,24 +41,23 @@ class Automate:
         login_button.click()
 
     def find_classes(self):
+        def collector():
+            self.classes[self.driver.find_element_by_xpath(
+                path + "div[2]/header/h2").text] = \
+                [self.driver.find_element_by_xpath(path + "div[3]/a"),
+                 self.driver.find_element_by_xpath(
+                     path + "div[2]/header/span/div/span[1]"
+                            "").text[-8:-3].strip().split(":")]
+
         for i in range(1, 30):
             try:
                 path = "/html/body/div[2]/div/section/div/div/div/div[{}]/".format(i)
                 if self.driver.find_element_by_xpath(path + "div[3]/a/span").text == "JOIN":
-                    self.classes[self.driver.find_element_by_xpath(
-                        path + "div[2]/header/h2").text] = \
-                        [self.driver.find_element_by_xpath(path + "div[3]/a"),
-                         self.driver.find_element_by_xpath(
-                             path + "div[2]/header/span/div/span[1]"
-                             "").text[-8:-3].strip().split(":")]
+                    collector()
 
                 elif self.driver.find_element_by_xpath(path + "div[3]/form/a/span").text == "JOIN":
-                    self.classes[self.driver.find_element_by_xpath(
-                        path + "div[2]/header/h2").text] = \
-                        [self.driver.find_element_by_xpath(path + "div[3]/form/a"),
-                         self.driver.find_element_by_xpath(
-                             path + "div[2]/header/span/div/span[1]"
-                             "").text[-8:-3].strip().split(":")]
+                    collector()
+                    # key: ClassName(real_class), value = List[web_element, List[<string, string> <hour, min>]]
 
             except NoSuchElementException:
                 pass
@@ -68,10 +67,14 @@ class Automate:
             priority_list = sorted(self.classes.items(),
                                    key=lambda x: (hour*60 + minute) - (int(x[1][1][0])*60 + int(x[1][1][1])))
             priority_list[0][1][0].click()
+            print("Joined a class, now dont doze off!!")
+            # self.driver.close()  # TODO:Discuss to remove or keep
             return
 
         if len(self.classes.keys()) == 1:
             list(self.classes.items())[0][1][0].click()
+            print("Joined a class, now dont doze off")
+            # self.driver.close()  # TODO: Discuss to remove or keep
             return
 
         print("No classes found, please check manually otherwise just sleep ZZZZZZZZZZZZZZZZZZ")
