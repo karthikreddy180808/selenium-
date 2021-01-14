@@ -52,11 +52,17 @@ class Automate:
         for i in range(1, 30):
             try:
                 path = "/html/body/div[2]/div/section/div/div/div/div[{}]/".format(i)
-                if self.driver.find_element_by_xpath(path + "div[3]/a/span").text == "JOIN":
-                    collector()
+                try:
+                    if self.driver.find_element_by_xpath(path + "div[3]/a/span").text == "JOIN":
+                        collector()
+                    else:
+                        pass
 
-                elif self.driver.find_element_by_xpath(path + "div[3]/form/a/span").text == "JOIN":
-                    collector()
+                except NoSuchElementException:
+                    if self.driver.find_element_by_xpath(path + "div[3]/form/a/span").text == "JOIN":
+                        collector()
+                    else:
+                        pass
                     # key: ClassName(real_class), value = List[web_element, List[<string, string> <hour, min>]]
 
             except NoSuchElementException:
