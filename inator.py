@@ -67,17 +67,18 @@ class Automate:
                                    key=lambda x: (hour * 60 + minute) - (int(x[1][1][0]) * 60 + int(x[1][1][1])))
             priority_list[0][1][0].click()
             print("Joined a class, now dont doze off!!")
-            self.driver.quit()
             sleep(10)
+            self.driver.quit()
             return
 
         elif len(self.classes.keys()) == 1:
             list(self.classes.items())[0][1][0].click()
             print("Joined a class, now dont doze off")
-            self.driver.quit()
             sleep(10)
+            self.driver.quit()
             return
         else:
             print("No classes found, please check manually otherwise just sleep ZZZZZZZZZZZZZZZZZZ")
+            sleep(2)
             self.driver.quit()
             return
