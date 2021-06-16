@@ -9,7 +9,10 @@ minute = int(datetime.datetime.now().strftime("%M"))
 
 class Automate:
     def __init__(self):
-        self.driver = webdriver.Chrome("chromedriver.exe")
+        options = webdriver.ChromeOptions()
+        options.add_argument('--user-data-dir=/Users/karthikreddy/Library/Application Support/Google/Chrome/Default')
+        options.add_argument('--profile-directory=Default')
+        self.driver = webdriver.Chrome("chromedriver.exe" , options = options)
         self.driver.get("http://ngitonline.com")
         self.classes = {}
 
