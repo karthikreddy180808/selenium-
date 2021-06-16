@@ -1,8 +1,18 @@
 import datetime
 from time_variance_authority import prune, get_time, time_log
 import inator
+import requests
+from discord import Webhook, RequestsWebhookAdapter
+
 status_code = 212
 time_log()
+
+webhook = Webhook.from_url(enter webhookurl , adapter=RequestsWebhookAdapter())
+with open("time_table_II-2.png", "rb") as f:
+    tt = discord.File(f)
+    f.close()
+    
+webhook.send("cross check with time table" , file = tt)    
 print("Log:")
 print("Initiating automation software...")
 while True:
