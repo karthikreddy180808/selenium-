@@ -19,8 +19,8 @@ class Automate:
         self.classes = {}
         self.message = ""
         self.status_code = 0
-        self.discord_webhook = Webhook.from_url(url="https://discord.com/api/webhooks/854653470061625386/OqprvHGI"
-                                                    "-WYOFH5Ff-lvdSTBmR1AOeRRp83v1FiobCpdcMc7LSViBhrhKI9J7eExD9rv",
+        self.discord_webhook = Webhook.from_url(url="https://discord.com/api/webhooks/854680810758340608"
+                                                    "/lFaIFitzQPQnf1P_ar8UiAeBPzb_06ImAoA_JMRIY7Ll2MgoV74FaiWCi_jT3Q_ik603",
                                                 adapter=RequestsWebhookAdapter())
 
     def login(self):
@@ -90,5 +90,5 @@ class Automate:
 
         self.discord_webhook.send(self.message)
         sleep(10)
-        self.driver.quit()
+        # self.driver.quit() // To be deprecated
         return self.status_code

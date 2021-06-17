@@ -24,7 +24,7 @@ def prune(time, status_code):
     hour, minute = map(int, time)
     status_messages = {404: "No classes found will keep checking again in 3 minutes",
                        212: "TVA is monitoring timelines, checking again in 40 minutes",
-                       200: "All good"}
+                       200: "All good, waiting for class to end"}
     if hour < 8 or hour >= 16:
         print(status_messages[212])
         sleep(2400)
@@ -39,5 +39,8 @@ def prune(time, status_code):
         return 404
     elif status_code == 200:
         print(status_messages[200])
-        sleep(2400)
+        if minute <= 40:
+            sleep(40-minute)
+        else:
+            sleep(60-minute)
         return 200
