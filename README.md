@@ -35,6 +35,7 @@ A project for automating class joining process for students of Ngit.
 ## Installation
 
 - Download the installer from here - [ClassJoinInator_Installer](https://github.com/Karred091201/selenium-/releases/tag/V1.0.0)
+- to install all the dependencies use "pip install -r requirements"
 
  # Contributions
  
