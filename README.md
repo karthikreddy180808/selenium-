@@ -24,6 +24,12 @@ A project for automating class joining process for students of Ngit.
 
 - pyinstaller - 4.1 (for packaging python code)
 
+- discord - 1.0.1
+
+- Pyautogui - 0.9.52
+
+- request - 2.25.1
+
 - *chromdriver* is required to run and test source code, but the console app comes inbuilt with chromedriver.
 
 ## Installation
