@@ -1,5 +1,0 @@
-selenium>=3.141.0
-PyAutoGui>=0.9.52
-discord>=1.0.1
-requests>=2.25.1
-datetime>=4.3
