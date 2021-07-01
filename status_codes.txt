@@ -1,3 +1,0 @@
-200: OK
-404: Class Not found
-212: Time Checking
