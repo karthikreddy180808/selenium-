@@ -1,32 +1,35 @@
 from selenium import webdriver
 import datetime
+import time as t
 from selenium.common.exceptions import NoSuchElementException
 from time import sleep
+import requests
 from discord import Webhook, RequestsWebhookAdapter
-from time_variance_authority import nexus_checker
 
 hour = int(datetime.datetime.now().strftime("%H"))
 minute = int(datetime.datetime.now().strftime("%M"))
+webhook = Webhook.from_url("https://discord.com/api/webhooks/854651909054398475/IDbosg2Z3zdngXZ2E8OSXWHwDuMaWabzW6_6CN2RGWV7T_TkY40b92Bg7Hsr6gwC0nmR" , adapter=RequestsWebhookAdapter())
 
 
 class Automate:
     def __init__(self):
         options = webdriver.ChromeOptions()
-        options.add_argument("--user-data-dir=C:\\Users\\saish\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
-        options.add_argument("--profile-directory=Default")
-        self.driver = webdriver.Chrome("chromedriver.exe", options=options)
+        options.add_argument('--user-data-dir=/Users/karthikreddy/Library/Application Support/Google/Chrome/Default')
+        options.add_argument('--profile-directory=Default')
+        self.driver = webdriver.Chrome("/Users/karthikreddy/PycharmProjects/pythonProject/classjoinator/chromedriver" , options= options)
         self.driver.get("http://ngitonline.com")
         self.classes = {}
-        self.message = ""
-        self.status_code = 0
-        self.discord_webhook = Webhook.from_url(url="https://discord.com/api/webhooks/854680810758340608"
-                                                    "/lFaIFitzQPQnf1P_ar8UiAeBPzb_06ImAoA_JMRIY7Ll2MgoV74FaiWCi_jT3Q_ik603",
-                                                adapter=RequestsWebhookAdapter())
+
+    def nexus_checker(t):
+        class_hour, class_minute, orig_hour, orig_minute = map(int, t)
+        if class_hour < 9:
+            class_hour += 12
+        return abs((orig_hour * 60 + orig_minute) - (class_hour * 60 + class_minute))
 
     def login(self):
         try:
-            print("    Getting credentials from saved file...")
-            with open("C:\\Users\\Public\\credentials.txt", "r") as f:
+            print("Getting credentials from saved file...")
+            with open("/Users/karthikreddy/PycharmProjects/pythonProject/classjoinator/credentiatls.txt", "r") as f:
                 creds = f.readline()
                 saved_username = creds[:8]
                 saved_password = creds[8:]
@@ -35,7 +38,7 @@ class Automate:
         except FileNotFoundError:
             print("\n Its your first time using this console app, please enter your credentials below (needed only "
                   "once) they will be stored in Public user folder")
-            with open("C:\\Users\\Public\\credentials.txt", "w") as f:
+            with open("/Users/karthikreddy/PycharmProjects/pythonProject/classjoinator/credentiatls.txt", "w") as f:
                 new_username = input("Username: ")
                 new_password = input("Password: ")
                 f.write(new_username)
@@ -71,6 +74,7 @@ class Automate:
                 except NoSuchElementException:
                     pass
 
+
     def join_most_recent_class(self):
         if len(self.classes.keys()) > 1:
             priority_list = sorted(self.classes.items(),
@@ -78,17 +82,21 @@ class Automate:
                                        (x[1][1][0], x[1][1][1], hour, minute)
                                    ))
             priority_list[0][1][0].click()
-            self.message = "Joined {} class, now don't doze off!!".format(priority_list[0][0])
-            self.status_code = 200
+            webhook.send("Joined {} class, now don't doze off!!".format(priority_list[0][0]))
+            sleep(300)
+            self.driver.quit()
+            sleep(2000)
+            return
+
         elif len(self.classes.keys()) == 1:
             list(self.classes.items())[0][1][0].click()
-            self.message = "Joined {} class, now don't doze off!!".format(list(self.classes.keys())[0])
-            self.status_code = 200
+            webhook.send("Joined {} class, now don't doze off!!".format(list(self.classes.keys())[0]))
+            sleep(300)
+            self.driver.quit()
+            sleep(2000)
+            return
         else:
-            self.message = "No classes found, please check manually or just sleep ZZZZZZZZZZ"
-            self.status_code = 404
-
-        self.discord_webhook.send(self.message)
-        sleep(10)
-        # self.driver.quit() // To be deprecated
-        return self.status_code
+            webhook.send("no classes at present. maybe i'm malfunctioning check manually!")
+            sleep(5)
+            self.driver.quit()
+            return
